@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Chirp;
 use Illuminate\Database\Seeder;
 
 class ChirpSeeder extends Seeder
@@ -41,7 +40,7 @@ class ChirpSeeder extends Seeder
             'Friday deploys with Laravel? No problem! 😎',
         ];
 
-        
+
         foreach ($chirps as $message) {
             $users->random()->chirps()->create([
                 'message' => $message,
