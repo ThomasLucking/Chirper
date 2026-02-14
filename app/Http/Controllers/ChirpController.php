@@ -34,4 +34,34 @@ class ChirpController extends Controller
         return redirect('/')->with('success', 'Your chirp has been posted!');
 
     }
+
+    public function edit(Chirp $chirp)
+    {
+        // We'll add authorization in lesson 11
+        return view('chirps.edit', compact('chirp'));
+    }
+
+    public function update(Request $request, Chirp $chirp)
+    {
+        if ($request->user()->cannot('update', $chirp)) {
+            abort(403);
+        }
+
+        // Validate
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        // Update
+        $chirp->update($validated);
+
+        return redirect('/')->with('success', 'Chirp updated!');
+    }
+
+    public function destroy(Chirp $chirp)
+    {
+        $chirp->delete();
+
+        return redirect('/')->with('success', 'Chirp deleted!');
+    }
 }
